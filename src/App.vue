@@ -106,6 +106,6 @@ export default {
 </script>
 <style scoped lang="scss">
 .chart-box {
-  width: 900px;
+  width: 800px;
 }
 </style>
