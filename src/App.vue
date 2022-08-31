@@ -1,9 +1,11 @@
 <template>
-  <canvas id="chart-express"></canvas>
+  <div class="chart-box">
+    <canvas id="chart-express"></canvas>
+  </div>
 </template>
 <script lang="ts">
 import Chart from "chart.js/auto";
-import { MONTHS, LastMonthDays, tooltipBar } from "./utils";
+import { MONTHS, LastMonthDays, tooltipLine } from "./utils";
 
 export default {
   data() {
@@ -39,7 +41,7 @@ export default {
 
     new Chart(ctx, {
       type: "line",
-      plugins: [tooltipBar],
+      plugins: [tooltipLine],
       data: {
         datasets: [
           {
@@ -54,21 +56,34 @@ export default {
           },
           {
             type: "line",
+            options: {
+              elements: {
+                point: {
+                  radius: 0,
+                },
+              },
+            },
             label: "Line Dataset",
             data: this.data.map(
               (i: number) => i + Math.round(Math.random() * 10)
             ),
             order: 1,
-            borderColor: "#b2bec3",
-            tension: 0.4,
-            borderDash: [10, 10],
-            borderWidth: 2,
+            borderColor: "#cbcfd3",
+            tension: 0.2,
+            borderDash: [5, 5],
+            borderWidth: 3,
             pointRadius: 0,
+            pointHoverRadius: 0,
           },
         ],
         labels: LastMonthDays,
       },
       options: {
+        plugins: {
+          tooltip: {
+            enabled: false,
+          },
+        },
         interaction: {
           intersect: false,
           mode: "index",
@@ -76,10 +91,8 @@ export default {
         scales: {
           y: {
             beginAtZero: true,
+            // grace: "40%",
           },
-        },
-        point: {
-          radius: 0,
         },
       },
     });
@@ -91,4 +104,8 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.chart-box {
+  width: 900px;
+}
+</style>
